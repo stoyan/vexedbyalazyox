@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>xhr test</title>
+    <style>
+      body,
+      button {
+        font-family: system-ui;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="close">close</button>
+    <button id="open">open</button>
+    <div id="messages"></div>
+    <script>
+      document.querySelector('#open').onclick = () => {
+        const msg = document.querySelector('#messages');
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'xhrserver.php', true);
+        console.log('OPENED', xhr.readyState);
+
+        xhr.onprogress = () => {
+          console.log('LOADING', xhr.readyState);
+          msg.textContent = xhr.responseText;
+        };
+
+        xhr.onload = () => {
+          console.log('DONE', xhr.readyState);
+        };
+
+        xhr.send(null);
+
+        document.querySelector('#close').onclick = function () {
+          console.log('User canceled');
+          xhr.onprogress = null;
+        };
+      };
+    </script>
+  </body>
+</html>

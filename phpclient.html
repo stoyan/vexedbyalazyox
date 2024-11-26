@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SSE test</title>
+    <style>
+      body,
+      button {
+        font-family: system-ui;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="close">close</button>
+    <button id="open">open</button>
+    <div id="messages"></div>
+    <script>
+      document.querySelector('#open').onclick = () => {
+        const msg = document.querySelector('#messages');
+        const evtSource = new EventSource('server.php');
+
+        evtSource.onopen = function () {
+          console.log('Connection to server opened.');
+        };
+
+        evtSource.onmessage = function (e) {
+          msg.textContent += e.data;
+          console.log(e);
+        };
+
+        evtSource.onerror = function (e) {
+          console.error(e);
+        };
+
+        evtSource.addEventListener('done', () => {
+          console.info('Server calls it done');
+          evtSource.close();
+        });
+
+        document.querySelector('#close').onclick = function () {
+          console.log('Connection closed');
+          evtSource.close();
+        };
+      };
+    </script>
+  </body>
+</html>
