@@ -4,5 +4,5 @@ Code in support of this blog post:
 https://www.phpied.com/ai-streaming-text-ui-how-to/
 
 <video width="640" height="360" controls>
-  <source src="./eventstream.mp4" type="video/mp4">
+  <source src="eventstream.mp4" type="video/mp4">
 </video>
